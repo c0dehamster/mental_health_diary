@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_diary/components/app_drawer.dart';
 
-import '../components/app_drawer.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CalendarPage extends StatefulWidget {
+  const CalendarPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CalendarPage> createState() => _CalendarPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +19,7 @@ class _HomePageState extends State<HomePage> {
         leadingWidth: 64,
         centerTitle: true,
         titleSpacing: 0,
+
         // Date navigator
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.chevron_left),
             ),
             const Text(
-              "January 30th",
+              "January",
               style: TextStyle(fontSize: 14),
             ), // Replace later with the actual date
             IconButton(
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: const [
           Center(
-            child: Text("Home"),
+            child: Text("Calendar goes here"),
           )
         ],
       ),

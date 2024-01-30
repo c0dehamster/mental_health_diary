@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:mental_health_diary/models/theme_settings.dart';
-import 'package:mental_health_diary/theme/dark_mode.dart';
+import 'dark_mode.dart';
+import 'light_mode.dart';
 
 class ThemeProvider extends ChangeNotifier {
   // Defaut theme is dark
@@ -10,9 +9,17 @@ class ThemeProvider extends ChangeNotifier {
   // Get the current theme
   ThemeData get themeData => _themeData;
 
+  // Is the current theme dark
+  bool get isDarkMode => _themeData == darkMode;
+
   // Set theme
   set themeData(ThemeData themeData) {
     _themeData = themeData;
     notifyListeners();
+  }
+
+  // Toggle theme
+  void toggleTheme() {
+    themeData = _themeData == lightMode ? darkMode : lightMode;
   }
 }

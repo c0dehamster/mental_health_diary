@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-ThemeData darkMode = ThemeData(
+ThemeData lightMode = ThemeData(
     colorScheme: const ColorScheme.dark(
   background: Color.fromRGBO(251, 251, 254, 1),
   primary: Color.fromRGBO(39, 35, 55, 1),
