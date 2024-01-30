@@ -6,6 +6,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: ListView(
