@@ -29,7 +29,7 @@ class AppDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.settings_outlined),
-              title: const Text("Home"),
+              title: const Text("Settings"),
               onTap: () {
                 Navigator.pushNamed(context, "/settings");
               },
