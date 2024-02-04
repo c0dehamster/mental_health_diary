@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_diary/components/NoteTile.dart';
 import 'package:mental_health_diary/components/icon_button_naked.dart';
 
 class NotesSection extends StatelessWidget {
@@ -25,7 +26,15 @@ class NotesSection extends StatelessWidget {
         ),
         const Column(
           children: [
-            Text("Empty"),
+            NoteTile(
+                contents:
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit."),
+            NoteTile(
+                contents:
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit."),
+            NoteTile(
+                contents:
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit."),
           ],
         )
       ],
