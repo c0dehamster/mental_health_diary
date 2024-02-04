@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_diary/components/mood_picker.dart';
 
 import '../components/app_drawer.dart';
 
@@ -51,9 +52,7 @@ class _HomePageState extends State<HomePage> {
       drawer: const AppDrawer(),
       body: ListView(
         children: const [
-          Center(
-            child: Text("Home"),
-          )
+          MoodPicker(),
         ],
       ),
     );
