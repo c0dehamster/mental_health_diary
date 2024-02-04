@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health_diary/components/mood_picker.dart';
+import 'package:mental_health_diary/components/notes_section.dart';
 
 import '../components/app_drawer.dart';
 
@@ -53,6 +54,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: const [
           MoodPicker(),
+          NotesSection(),
         ],
       ),
     );
