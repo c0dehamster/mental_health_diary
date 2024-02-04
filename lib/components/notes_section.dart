@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mental_health_diary/components/NoteTile.dart';
+import 'package:mental_health_diary/components/note_tile.dart';
 import 'package:mental_health_diary/components/icon_button_naked.dart';
 
 class NotesSection extends StatelessWidget {
@@ -24,6 +24,7 @@ class NotesSection extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 64),
         const Column(
           children: [
             NoteTile(

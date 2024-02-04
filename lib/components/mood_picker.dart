@@ -28,38 +28,43 @@ class _MoodPickerState extends State<MoodPicker> {
         .map((emoji) => SvgPicture.asset(emoji, width: 24, height: 24))
         .toList();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text("How would you rate your mood?"),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 72),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text("How would you rate your mood?"),
 
-        const SizedBox(height: 32),
+          const SizedBox(height: 32),
 
-        // Emoji labels
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: emojis,
-        ),
+          // Emoji labels
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: emojis,
+          ),
 
-        // Mood select checkbox group
-        Row(
-          children: List<Widget>.generate(moodSpectre.length, (index) {
-            return Expanded(
-              child: RadioListTile<int>(
-                  contentPadding: const EdgeInsets.all(0),
-                  toggleable: true,
-                  fillColor: MaterialStateProperty.all(moodSpectre[index]),
-                  value: index,
-                  groupValue: _moodValue,
-                  onChanged: (value) {
-                    setState(() {
-                      _moodValue = value;
-                    });
-                  }),
-            );
-          }),
-        ),
-      ],
+          // Mood select checkbox group
+          Row(
+            children: List<Widget>.generate(moodSpectre.length, (index) {
+              return Expanded(
+                child: Transform.scale(
+                  scale: 0.75,
+                  child: Radio<int>(
+                      toggleable: true,
+                      fillColor: MaterialStateProperty.all(moodSpectre[index]),
+                      value: index,
+                      groupValue: _moodValue,
+                      onChanged: (value) {
+                        setState(() {
+                          _moodValue = value;
+                        });
+                      }),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }

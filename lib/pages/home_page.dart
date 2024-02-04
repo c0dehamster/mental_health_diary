@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const AppDrawer(),
       body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         children: const [
           MoodPicker(),
           NotesSection(),
