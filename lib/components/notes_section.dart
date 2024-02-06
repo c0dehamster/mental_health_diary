@@ -24,7 +24,7 @@ class NotesSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 64),
+        const SizedBox(height: 48),
         const Column(
           children: [
             NoteTile(

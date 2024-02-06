@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_diary/components/mood_chart.dart';
 import 'package:mental_health_diary/components/mood_picker.dart';
 import 'package:mental_health_diary/components/notes_section.dart';
+import 'package:mental_health_diary/mock_data/mock_data_today.dart';
 
 import '../components/app_drawer.dart';
 
@@ -53,9 +55,12 @@ class _HomePageState extends State<HomePage> {
       drawer: const AppDrawer(),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: const [
-          MoodPicker(),
-          NotesSection(),
+        children: [
+          MoodChart(data: mockDataMoodValues),
+          const SizedBox(height: 72),
+          const MoodPicker(),
+          const SizedBox(height: 72),
+          const NotesSection(),
         ],
       ),
     );
