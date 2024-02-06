@@ -16,4 +16,8 @@ final List<MoodRecord> mockDataMoodValues = [
     value: 5,
     timestamp: DateTime(today.year, today.month, today.day, 22),
   ),
+  MoodRecord(
+    value: 3,
+    timestamp: DateTime(today.year, today.month, today.day, 23),
+  ),
 ];
