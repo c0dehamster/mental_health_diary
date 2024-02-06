@@ -1,17 +1,17 @@
 import 'package:hive/hive.dart';
 
-part 'mood_record.g.dart';
+part 'note.g.dart';
 
-@HiveType(typeId: 1)
-class MoodRecord {
+@HiveType(typeId: 2)
+class Note {
   @HiveField(0)
-  final int value;
+  final String contents;
 
   @HiveField(1)
   final DateTime timestamp;
 
-  MoodRecord({
-    required this.value,
+  Note({
+    required this.contents,
     required this.timestamp,
   });
 }

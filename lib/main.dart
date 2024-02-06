@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:mental_health_diary/models/mood_record.dart';
+import 'package:mental_health_diary/models/note.dart';
+import 'package:mental_health_diary/pages/calendar_page.dart';
+import 'package:mental_health_diary/pages/home_page.dart';
+import 'package:mental_health_diary/pages/settings_page.dart';
+import 'package:mental_health_diary/theme/theme_provider.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+
+  // Register adapters
+  Hive.registerAdapter(MoodRecordAdapter());
+  Hive.registerAdapter(NoteAdapter());
+
+  // Open the boxes
+  await Hive.openBox("themeSettings");
+  await Hive.openBox("firstRecordDate");
+  await Hive.openBox("records");
+  await Hive.openBox("notes");
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -9,12 +37,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      routes: {
+        "/": (context) => const HomePage(),
+        "/calendarView": (context) => const CalendarPage(),
+        "/settings": (context) => const SettingsPage(),
+      },
+      title: "Mental Health Diary",
+      debugShowCheckedModeBanner: false,
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }

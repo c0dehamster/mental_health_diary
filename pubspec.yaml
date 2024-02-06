@@ -9,10 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
+
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
   path_provider: ^2.1.2
   provider: ^6.1.1
+  flutter_svg: ^2.0.9
+  fl_chart: ^0.66.1
 
   
 
@@ -20,8 +23,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
-  isar_generator: ^3.1.0+1
   build_runner: ^2.4.8
+  hive_generator: ^2.0.1
+
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/images/

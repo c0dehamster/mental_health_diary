@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mental_health_diary/components/mood_chart.dart';
-import 'package:mental_health_diary/components/mood_picker.dart';
-import 'package:mental_health_diary/components/notes_section.dart';
-import 'package:mental_health_diary/mock_data/mock_data_today.dart';
+import 'package:mental_health_diary/components/app_drawer.dart';
 
-import '../components/app_drawer.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CalendarPage extends StatefulWidget {
+  const CalendarPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CalendarPage> createState() => _CalendarPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +19,7 @@ class _HomePageState extends State<HomePage> {
         leadingWidth: 64,
         centerTitle: true,
         titleSpacing: 0,
+
         // Date navigator
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +29,7 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.chevron_left),
             ),
             const Text(
-              "January 30th",
+              "January",
               style: TextStyle(fontSize: 14),
             ), // Replace later with the actual date
             IconButton(
@@ -54,13 +50,10 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const AppDrawer(),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: [
-          MoodChart(data: mockDataMoodValues),
-          const SizedBox(height: 72),
-          const MoodPicker(),
-          const SizedBox(height: 72),
-          const NotesSection(),
+        children: const [
+          Center(
+            child: Text("Calendar goes here"),
+          )
         ],
       ),
     );

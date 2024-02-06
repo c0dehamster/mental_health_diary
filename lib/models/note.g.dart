@@ -1,33 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mood_record.dart';
+part of 'note.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MoodRecordAdapter extends TypeAdapter<MoodRecord> {
+class NoteAdapter extends TypeAdapter<Note> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  MoodRecord read(BinaryReader reader) {
+  Note read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MoodRecord(
-      value: fields[0] as int,
+    return Note(
+      contents: fields[0] as String,
       timestamp: fields[1] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MoodRecord obj) {
+  void write(BinaryWriter writer, Note obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.value)
+      ..write(obj.contents)
       ..writeByte(1)
       ..write(obj.timestamp);
   }
@@ -38,7 +38,7 @@ class MoodRecordAdapter extends TypeAdapter<MoodRecord> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MoodRecordAdapter &&
+      other is NoteAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
