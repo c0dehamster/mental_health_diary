@@ -19,6 +19,7 @@ class _MoodPickerState extends State<MoodPicker> {
   int? _moodValue;
 
   // Create a new mood record entry
+  // Ideally, it should also clear the radio group, but I am not sure how to implement this
 
   _addRecord() async {
     if (_moodValue != null) {
@@ -56,53 +57,51 @@ class _MoodPickerState extends State<MoodPicker> {
         .map((emoji) => SvgPicture.asset(emoji, width: 24, height: 24))
         .toList();
 
-    return Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("How would you rate your mood?"),
-              IconButton(
-                onPressed: () {
-                  _addRecord();
-                },
-                icon: const Icon(Icons.add),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("How would you rate your mood?"),
+            IconButton(
+              onPressed: () {
+                _addRecord();
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 32),
+
+        // Emoji labels
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: emojis,
+        ),
+
+        // Mood select checkbox group
+        Row(
+          children: List<Widget>.generate(moodSpectre.length, (index) {
+            return Expanded(
+              child: Transform.scale(
+                scale: 0.75,
+                child: Radio<int>(
+                    toggleable: true,
+                    fillColor: MaterialStateProperty.all(moodSpectre[index]),
+                    value: index,
+                    groupValue: _moodValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _moodValue = value;
+                      });
+                    }),
               ),
-            ],
-          ),
-
-          const SizedBox(height: 32),
-
-          // Emoji labels
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: emojis,
-          ),
-
-          // Mood select checkbox group
-          Row(
-            children: List<Widget>.generate(moodSpectre.length, (index) {
-              return Expanded(
-                child: Transform.scale(
-                  scale: 0.75,
-                  child: Radio<int>(
-                      toggleable: true,
-                      fillColor: MaterialStateProperty.all(moodSpectre[index]),
-                      value: index,
-                      groupValue: _moodValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _moodValue = value;
-                        });
-                      }),
-                ),
-              );
-            }),
-          ),
-        ],
-      ),
+            );
+          }),
+        ),
+      ],
     );
   }
 }
