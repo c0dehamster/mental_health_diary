@@ -40,7 +40,7 @@ class _MoodPickerState extends State<MoodPicker> {
     super.initState();
 
     // Get reference to the mood records box
-    box = Hive.box("records");
+    box = Hive.box<MoodRecord>("records");
   }
 
   @override
@@ -64,6 +64,7 @@ class _MoodPickerState extends State<MoodPicker> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("How would you rate your mood?"),
+            // The button should be enabled only if a value is selected
             IconButton(
               onPressed: () {
                 _addRecord();

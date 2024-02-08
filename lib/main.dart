@@ -21,8 +21,8 @@ void main() async {
   // Open the boxes
   await Hive.openBox("themeSettings");
   await Hive.openBox("firstRecordDate");
-  await Hive.openBox("records");
-  await Hive.openBox("notes");
+  await Hive.openBox<MoodRecord>("records");
+  await Hive.openBox<Note>("notes");
 
   runApp(
     ChangeNotifierProvider(

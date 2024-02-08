@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/app_drawer.dart';
 
+import '../models/mood_record.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -9,7 +11,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recordsBox = Hive.box("records");
+    final recordsBox = Hive.box<MoodRecord>("records");
 
     clearRecords() async {
       recordsBox.clear();
