@@ -15,7 +15,6 @@ class SettingsPage extends StatelessWidget {
 
     clearRecords() async {
       recordsBox.clear();
-      print("All clear");
     }
 
     return Scaffold(
@@ -45,21 +44,19 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    clearRecords();
-                  },
-                  child: const Text(
-                    "Clear records",
-                    style: TextStyle(fontSize: 16),
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton(
+                onPressed: () {
+                  clearRecords();
+                },
+                child: const Text(
+                  "Clear records",
+                  style: TextStyle(fontSize: 16),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
