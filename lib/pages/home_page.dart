@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
 import 'package:mental_health_diary/components/notes_section.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
-import 'package:mental_health_diary/utils/is_current_date.dart';
+import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 import '../components/app_drawer.dart';
 import '../components/mood_picker.dart';

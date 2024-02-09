@@ -5,3 +5,7 @@ bool isCurrentDate(DateTime date1, DateTime date2) {
 
   return false;
 }
+
+double getTimeAsHours(DateTime datetime) {
+  return datetime.hour + datetime.minute / 60;
+}

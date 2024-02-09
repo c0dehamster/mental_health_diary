@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 
-import '../utils/is_current_date.dart';
+import '../utils/datetime_utils.dart';
 
 class MoodChart extends StatelessWidget {
   const MoodChart({
@@ -38,7 +38,7 @@ class MoodChart extends StatelessWidget {
                 LineChartBarData(
                   spots: currentDateRecords
                       .map((moodRecord) => FlSpot(
-                            moodRecord.timestamp.hour.toDouble(),
+                            getTimeAsHours(moodRecord.timestamp),
                             moodRecord.value.toDouble(),
                           ))
                       .toList(),
