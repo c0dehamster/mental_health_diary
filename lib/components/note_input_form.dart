@@ -41,6 +41,7 @@ class _NoteInputFormState extends State<NoteInputForm> {
     );
 
     _noteController.clear();
+    widget.closeForm();
   }
 
   @override
