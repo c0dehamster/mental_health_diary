@@ -61,7 +61,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: clearRecords,
+                onPressed: clearNotes,
                 child: const Text(
                   "Clear notes",
                   style: TextStyle(fontSize: 16),

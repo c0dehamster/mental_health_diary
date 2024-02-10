@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 72),
           const MoodPicker(),
           const SizedBox(height: 72),
-          const NotesSection(),
+          NotesSection(dateToDisplay: today),
         ],
       ),
     );
