@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/app_drawer.dart';
 
 import '../models/mood_record.dart';
+import '../models/note.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -12,9 +13,14 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recordsBox = Hive.box<MoodRecord>("records");
+    final notesBox = Hive.box<Note>("notes");
 
     clearRecords() async {
       recordsBox.clear();
+    }
+
+    clearNotes() async {
+      notesBox.clear();
     }
 
     return Scaffold(
@@ -48,11 +54,16 @@ class SettingsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextButton(
-                onPressed: () {
-                  clearRecords();
-                },
+                onPressed: clearRecords,
                 child: const Text(
                   "Clear records",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              TextButton(
+                onPressed: clearRecords,
+                child: const Text(
+                  "Clear notes",
                   style: TextStyle(fontSize: 16),
                 ),
               ),
