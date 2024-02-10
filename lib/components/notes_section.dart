@@ -48,12 +48,12 @@ class _NotesSectionState extends State<NotesSection> {
     void deleteTile(BuildContext? tile) {}
     ;
 
-    Widget notesList = ValueListenableBuilder(
+    return ValueListenableBuilder(
       valueListenable: notesBox.listenable(),
       builder: (context, value, child) {
+        // Notes to display according to the date
         List<Note> notes = notesBox.toMap().values.toList() as List<Note>;
 
-        // Notes to display according to the date
         List<Note> currentDateNotes = [];
 
         for (final note in notes) {
@@ -64,47 +64,49 @@ class _NotesSectionState extends State<NotesSection> {
 
         if (currentDateNotes.isEmpty) return Container();
 
-        List<Widget> noteTiles = currentDateNotes.map((note) {
-          return NoteTile(
-              contents: note.contents,
-              editTile: editTile,
-              deleteTile: deleteTile);
-        }).toList();
+        List<Widget> noteTiles = currentDateNotes
+            .map((note) {
+              return NoteTile(
+                  contents: note.contents,
+                  editTile: editTile,
+                  deleteTile: deleteTile);
+            })
+            .toList()
+            .reversed
+            .toList();
 
         return Column(
-          children: noteTiles,
-        );
-      },
-    );
-
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButtonNaked(
-              onPressed: _showForm,
-              label: "Add note",
-              icon: Icons.add,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButtonNaked(
+                  onPressed: _showForm,
+                  label: "Add note",
+                  icon: Icons.add,
+                ),
+                IconButtonNaked(
+                  onPressed: () {},
+                  label: "View notes",
+                  icon: Icons.expand_more,
+                ),
+              ],
             ),
-            IconButtonNaked(
-              onPressed: () {},
-              label: "View notes",
-              icon: Icons.expand_more,
+
+            // New note input, togglable
+            isFormShown
+                ? NoteInputForm(
+                    closeForm: () => _toggleFormVisibility(false),
+                  )
+                : Container(),
+            const SizedBox(height: 48),
+
+            Column(
+              children: noteTiles,
             ),
           ],
-        ),
-
-        // New note input, togglable
-        isFormShown
-            ? NoteInputForm(
-                closeForm: () => _toggleFormVisibility(false),
-              )
-            : Container(),
-        const SizedBox(height: 48),
-
-        notesList,
-      ],
+        );
+      },
     );
   }
 }
