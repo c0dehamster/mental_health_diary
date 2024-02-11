@@ -10,8 +10,12 @@ class Note {
   @HiveField(1)
   final DateTime timestamp;
 
+  @HiveField(2)
+  final int index;
+
   Note({
     required this.contents,
     required this.timestamp,
+    required this.index,
   });
 }

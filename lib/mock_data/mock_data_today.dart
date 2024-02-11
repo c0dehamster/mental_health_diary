@@ -30,20 +30,24 @@ final List<Note> mockDataNotes = [
     contents:
         "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident quo voluptates dicta tempore non, ratione velit ad illum fugiat aut alias laboriosam facilis animi consectetur distinctio quaerat, qui natus sunt possimus tempora?",
     timestamp: DateTime(today.year, today.month, today.day, 10),
+    index: 0,
   ),
   Note(
     contents:
         "Amet fuga commodi beatae ex quod quibusdam impedit mollitia iusto pariatur saepe. Ea debitis provident ipsam accusamus optio in, numquam veritatis similique ratione.",
     timestamp: DateTime(today.year, today.month, today.day, 16),
+    index: 1,
   ),
   Note(
     contents:
         "Aliquid facere atque porro laudantium hic vero sit quod maiores enim illum placeat assumenda quo quidem unde, earum dignissimos consequatur iure? Doloremque, dignissimos! Soluta quam quibusdam iusto facilis eveniet.",
     timestamp: DateTime(today.year, today.month, today.day, 20),
+    index: 2,
   ),
   Note(
     contents:
         "Reprehenderit ratione quasi perferendis sapiente in soluta totam ipsa velit, quo minus adipisci quisquam recusandae?",
     timestamp: DateTime(today.year, today.month, today.day, 22),
+    index: 3,
   ),
 ];

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mental_health_diary/models/database/notes_database.dart';
 import 'package:mental_health_diary/models/note.dart';
 
 class NoteInputForm extends StatefulWidget {
   const NoteInputForm({
     super.key,
     required this.closeForm,
+    this.noteToEdit,
   });
 
   final void Function() closeForm;
+  final Note? noteToEdit;
 
   @override
   State<NoteInputForm> createState() => _NoteInputFormState();
@@ -17,6 +20,7 @@ class NoteInputForm extends StatefulWidget {
 class _NoteInputFormState extends State<NoteInputForm> {
   final _noteController = TextEditingController();
   final _noteInputFormKey = GlobalKey<FormState>();
+  final notesDatabase = NotesDatabase();
 
   late final Box notesBox;
 
@@ -30,15 +34,16 @@ class _NoteInputFormState extends State<NoteInputForm> {
     });
   }
 
-  void _addNote() {
-    final text = _noteController.text;
-
-    notesBox.add(
-      Note(
-        contents: text,
-        timestamp: DateTime.timestamp(),
-      ),
-    );
+  void _onSubmit() {
+    if (widget.noteToEdit == null) {
+      notesDatabase.addNote(_noteController.text);
+    } else {
+      // _editNote can be called only if the noteToEdit is provided
+      notesDatabase.editNote(
+        widget.noteToEdit!.index,
+        _noteController.text,
+      );
+    }
 
     _noteController.clear();
     widget.closeForm();
@@ -50,6 +55,9 @@ class _NoteInputFormState extends State<NoteInputForm> {
 
     // Open the box
     notesBox = Hive.box<Note>("notes");
+
+    // Set the text field value if provided
+    _noteController.text = widget.noteToEdit?.contents ?? "";
 
     // Start listening to changes
     _noteController.addListener(_toggleSubmitButton);
@@ -63,6 +71,8 @@ class _NoteInputFormState extends State<NoteInputForm> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonText = widget.noteToEdit != null ? "Confirm" : "Add";
+
     final buttonColor = isAddEnabled
         ? Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.tertiary;
@@ -78,6 +88,9 @@ class _NoteInputFormState extends State<NoteInputForm> {
           children: [
             TextFormField(
               controller: _noteController,
+              decoration: const InputDecoration(
+                hintText: "Add a note",
+              ),
             ),
 
             // Control buttons
@@ -95,10 +108,10 @@ class _NoteInputFormState extends State<NoteInputForm> {
                   ),
                   onPressed: () {
                     if (isAddEnabled) {
-                      _addNote();
+                      _onSubmit();
                     }
                   },
-                  child: const Text("Add"),
+                  child: Text(buttonText),
                 ),
               ],
             )

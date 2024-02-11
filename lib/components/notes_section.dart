@@ -5,6 +5,7 @@ import 'package:mental_health_diary/components/note_tile.dart';
 import 'package:mental_health_diary/components/icon_button_naked.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
 
+import '../models/database/notes_database.dart';
 import '../models/note.dart';
 
 class NotesSection extends StatefulWidget {
@@ -22,6 +23,10 @@ class NotesSection extends StatefulWidget {
 class _NotesSectionState extends State<NotesSection> {
   late final Box notesBox;
 
+  final notesDatabase = NotesDatabase();
+
+  late Note? noteToEdit;
+
   bool isFormShown = false;
 
   void _toggleFormVisibility(bool value) {
@@ -30,7 +35,19 @@ class _NotesSectionState extends State<NotesSection> {
     });
   }
 
-  void _showForm() {
+  void _addNote() {
+    setState(() {
+      noteToEdit = null;
+    });
+
+    _toggleFormVisibility(true);
+  }
+
+  void _setNoteToEdit(Note note) {
+    setState(() {
+      noteToEdit = note;
+    });
+
     _toggleFormVisibility(true);
   }
 
@@ -43,12 +60,11 @@ class _NotesSectionState extends State<NotesSection> {
 
   @override
   Widget build(BuildContext context) {
-    void editTile(BuildContext? tile) {}
-    ;
-    void deleteTile(BuildContext? tile) {}
-    ;
+    void deleteTile(Note note) {
+      notesDatabase.deleteNote(note.index);
+    }
 
-    return ValueListenableBuilder(
+    final noteTiles = ValueListenableBuilder(
       valueListenable: notesBox.listenable(),
       builder: (context, value, child) {
         // Notes to display according to the date
@@ -67,46 +83,50 @@ class _NotesSectionState extends State<NotesSection> {
         List<Widget> noteTiles = currentDateNotes
             .map((note) {
               return NoteTile(
-                  contents: note.contents,
-                  editTile: editTile,
-                  deleteTile: deleteTile);
+                contents: note.contents,
+                editTile: (context) => _setNoteToEdit(note),
+                deleteTile: (context) => deleteTile(note),
+              );
             })
             .toList()
             .reversed
             .toList();
 
         return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButtonNaked(
-                  onPressed: _showForm,
-                  label: "Add note",
-                  icon: Icons.add,
-                ),
-                IconButtonNaked(
-                  onPressed: () {},
-                  label: "View notes",
-                  icon: Icons.expand_more,
-                ),
-              ],
-            ),
-
-            // New note input, togglable
-            isFormShown
-                ? NoteInputForm(
-                    closeForm: () => _toggleFormVisibility(false),
-                  )
-                : Container(),
-            const SizedBox(height: 48),
-
-            Column(
-              children: noteTiles,
-            ),
-          ],
+          children: noteTiles,
         );
       },
+    );
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButtonNaked(
+              onPressed: _addNote,
+              label: "Add note",
+              icon: Icons.add,
+            ),
+            IconButtonNaked(
+              onPressed: () {},
+              label: "View notes",
+              icon: Icons.expand_more,
+            ),
+          ],
+        ),
+
+        // New note input, togglable
+        isFormShown
+            ? NoteInputForm(
+                closeForm: () => _toggleFormVisibility(false),
+                noteToEdit: noteToEdit,
+              )
+            : Container(),
+        const SizedBox(height: 48),
+
+        noteTiles,
+      ],
     );
   }
 }
