@@ -17,6 +17,9 @@ class IconButtonNaked extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: Row(
+        // This is how you compress a row/column to its intrinsic size
+
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(label),
           const SizedBox(width: 12),
