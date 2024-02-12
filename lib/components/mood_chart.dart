@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:mental_health_diary/mock_data/mock_data_today.dart';
 import 'package:mental_health_diary/models/database/mood_database.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 
@@ -27,7 +26,7 @@ class MoodChart extends StatelessWidget {
         builder: (context, value, child) {
           // List of records to display
           List<MoodRecord> currentDateRecords =
-              moodDatabase.getRecordsByDate(today);
+              moodDatabase.getRecordsByDate(dateToDisplay);
 
           return LineChart(
             LineChartData(

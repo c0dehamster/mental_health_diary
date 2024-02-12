@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:mental_health_diary/components/mood_chart.dart';
+
+import '../models/database/mood_database.dart';
+import '../models/database/notes_database.dart';
+
+class InfoBlock extends StatelessWidget {
+  const InfoBlock({
+    super.key,
+    required this.dateToDisplay,
+  });
+
+  final DateTime dateToDisplay;
+
+  @override
+  Widget build(BuildContext context) {
+    final moodDatabase = MoodDatabase();
+    final notesDatabase = NotesDatabase();
+    final averageMood = moodDatabase.getAveragePerDate(dateToDisplay);
+    final averageMoodFormatted =
+        averageMood != null ? "Average mood: $averageMood" : "No data";
+
+    List<Widget> notes = notesDatabase.notes.map((note) {
+      return Container(
+        width: double.infinity,
+        decoration:
+            BoxDecoration(color: Theme.of(context).colorScheme.secondary),
+        padding: const EdgeInsets.all(16),
+        child: Text(
+          note.contents,
+          style: const TextStyle(height: 2),
+        ),
+      );
+    }).toList();
+
+    return Column(
+      children: [
+        MoodChart(dateToDisplay: dateToDisplay),
+        const SizedBox(height: 72),
+        Text(averageMoodFormatted),
+        const SizedBox(height: 48),
+        Column(
+          children: notes,
+        ),
+      ],
+    );
+  }
+}

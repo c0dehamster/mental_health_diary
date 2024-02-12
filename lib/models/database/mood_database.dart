@@ -32,6 +32,22 @@ class MoodDatabase {
     return currentDateRecords;
   }
 
+  // Get the average of the mood for a date
+
+  num? getAveragePerDate(DateTime dateToDisplay) {
+    final currentDateRecords = getRecordsByDate(dateToDisplay);
+
+    // This is obviously wrong, just a way to check if the data is displayed
+
+    final values = currentDateRecords.map((e) => e.value);
+
+    final average = values.isNotEmpty
+        ? values.reduce((value, element) => value + element) / values.length
+        : null;
+
+    return average;
+  }
+
   // Update the database
 
   void addRecord(int value) {

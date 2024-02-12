@@ -93,20 +93,10 @@ class _NotesSectionState extends State<NotesSection> {
 
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButtonNaked(
-              onPressed: _addNote,
-              label: "Add note",
-              icon: Icons.add,
-            ),
-            IconButtonNaked(
-              onPressed: () {},
-              label: "View notes",
-              icon: Icons.expand_more,
-            ),
-          ],
+        IconButtonNaked(
+          onPressed: _addNote,
+          label: "Add note",
+          icon: Icons.add,
         ),
 
         // New note input, togglable

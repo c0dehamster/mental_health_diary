@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_diary/components/info_block.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
 import 'package:mental_health_diary/components/home_page_components/notes_section.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
@@ -89,15 +90,17 @@ class _HomePageState extends State<HomePage> {
       drawer: const AppDrawer(),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: [
-          MoodChart(
-            dateToDisplay: today,
-          ),
-          const SizedBox(height: 72),
-          const MoodPicker(),
-          const SizedBox(height: 72),
-          NotesSection(dateToDisplay: today),
-        ],
+        children: isCurrentDate(displayedDate, today)
+            ? [
+                MoodChart(
+                  dateToDisplay: today,
+                ),
+                const SizedBox(height: 72),
+                const MoodPicker(),
+                const SizedBox(height: 72),
+                NotesSection(dateToDisplay: today),
+              ]
+            : [InfoBlock(dateToDisplay: displayedDate)],
       ),
     );
   }
