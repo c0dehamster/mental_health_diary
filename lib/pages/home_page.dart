@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
 import 'package:mental_health_diary/components/home_page_components/notes_section.dart';
-import 'package:mental_health_diary/models/mood_record.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 import '../components/app_drawer.dart';
@@ -16,21 +14,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late DateTime displayedDate;
+
   final today = DateTime.now();
+
+  // Date nav callbacks
+
+  void incrementDate() {
+    setState(() {
+      displayedDate = displayedDate.add(const Duration(days: 1));
+    });
+  }
+
+  void decrementDate() {
+    setState(() {
+      displayedDate = displayedDate.subtract(const Duration(days: 1));
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // By default, the displayed date is the current date
+    displayedDate = today;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final recordsBox = Hive.box<MoodRecord>("records");
-    List<MoodRecord> records = recordsBox.toMap().values.toList();
-
-    // List of records to display
-    List<MoodRecord> currentDateRecords = [];
-
-    for (final record in records) {
-      if (isCurrentDate(record.timestamp, today)) {
-        currentDateRecords.add(record);
-      }
-    }
+    final dateFormatted = "${months[displayedDate.month]} ${displayedDate.day}";
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -46,17 +58,22 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: decrementDate,
               icon: const Icon(Icons.chevron_left),
             ),
-            const Text(
-              "January 30th",
-              style: TextStyle(fontSize: 14),
+            Text(
+              dateFormatted,
+              style: const TextStyle(fontSize: 14),
             ), // Replace later with the actual date
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.chevron_right),
-            ),
+
+            // The forward button is only displayed if the date currently viewed is before the current date
+
+            !isCurrentDate(displayedDate, today)
+                ? IconButton(
+                    onPressed: incrementDate,
+                    icon: const Icon(Icons.chevron_right),
+                  )
+                : Container(width: 48),
           ],
         ),
         actions: [
