@@ -29,6 +29,8 @@ class NotesDatabase {
   }
 
   void editNote(int index, String newContents) {
+    _notesBox.deleteAt(index);
+
     _notesBox.put(
       index,
       Note(

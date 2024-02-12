@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/models/database/notes_database.dart';
 import 'package:mental_health_diary/models/note.dart';
@@ -88,6 +89,11 @@ class _NoteInputFormState extends State<NoteInputForm> {
           children: [
             TextFormField(
               controller: _noteController,
+              maxLength: 300,
+              maxLengthEnforcement:
+                  MaxLengthEnforcement.truncateAfterCompositionEnds,
+              maxLines: null,
+              scrollPadding: const EdgeInsets.all(96),
               decoration: const InputDecoration(
                 hintText: "Add a note",
               ),
