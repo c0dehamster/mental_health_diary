@@ -1,26 +1,57 @@
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 
-class MoodDatabase {
-  /* SETUP */
-  static late Box box;
+import '../../utils/datetime_utils.dart';
 
-  static void initialize() {
-    box = Hive.box<MoodRecord>("records");
+class MoodDatabase {
+  List<MoodRecord> records = [];
+
+  // Reference the box
+
+  final _recordsBox = Hive.box<MoodRecord>("records");
+
+  // Load the data from the database
+
+  void loadData() {
+    records = _recordsBox.toMap().values.toList();
   }
 
-  List<MoodRecord> records = box.toMap().values.toList() as List<MoodRecord>;
+  // Get records given a particular date
 
-  /* CRUD OPERATIONS */
+  List<MoodRecord> getRecordsByDate(DateTime dateToDisplay) {
+    loadData();
 
-  // CREATE - save a new record
+    List<MoodRecord> currentDateRecords = [];
 
-  // Will see if async is required
-  void addRecord(int value) {}
+    for (final record in records) {
+      if (isCurrentDate(record.timestamp, dateToDisplay)) {
+        currentDateRecords.add(record);
+      }
+    }
 
-  // READ - get all records for a given date
+    return currentDateRecords;
+  }
 
-  // UPDATE
+  // Update the database
 
-  // DELETE - clear all records
+  void addRecord(int value) {
+    _recordsBox.add(
+      MoodRecord(
+        value: value,
+        timestamp: DateTime.timestamp(),
+      ),
+    );
+  }
+
+  // Overwrite the last record
+
+  void overwriteRecord(int newValue) {
+    _recordsBox.deleteAt(_recordsBox.length - 1);
+    _recordsBox.add(
+      MoodRecord(
+        value: newValue,
+        timestamp: DateTime.timestamp(),
+      ),
+    );
+  }
 }

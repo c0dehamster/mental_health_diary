@@ -1,5 +1,6 @@
 import 'package:hive_flutter/adapters.dart';
 
+import '../../utils/datetime_utils.dart';
 import '../note.dart';
 
 class NotesDatabase {
@@ -12,6 +13,22 @@ class NotesDatabase {
 
   void loadData() {
     notes = _notesBox.toMap().values.toList();
+  }
+
+  // Read notes given a particular date
+
+  List<Note> getNotesByDate(DateTime dateToDisplay) {
+    loadData();
+
+    List<Note> currentDateNotes = [];
+
+    for (final note in notes) {
+      if (isCurrentDate(note.timestamp, dateToDisplay)) {
+        currentDateNotes.add(note);
+      }
+    }
+
+    return currentDateNotes;
   }
 
   // Update the database

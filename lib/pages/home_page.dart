@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
-import 'package:mental_health_diary/components/notes_section.dart';
+import 'package:mental_health_diary/components/home_page_components/notes_section.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 import '../components/app_drawer.dart';
-import '../components/mood_picker.dart';
+import '../components/home_page_components/mood_picker.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

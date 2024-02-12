@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:mental_health_diary/mock_data/mock_data_today.dart';
+import 'package:mental_health_diary/models/database/mood_database.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 
 import '../utils/datetime_utils.dart';
@@ -15,6 +17,7 @@ class MoodChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final moodDatabase = MoodDatabase();
     final recordsBox = Hive.box<MoodRecord>("records");
 
     return AspectRatio(
@@ -22,16 +25,10 @@ class MoodChart extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: recordsBox.listenable(),
         builder: (context, value, child) {
-          List<MoodRecord> records = recordsBox.toMap().values.toList();
-
           // List of records to display
-          List<MoodRecord> currentDateRecords = [];
+          List<MoodRecord> currentDateRecords =
+              moodDatabase.getRecordsByDate(today);
 
-          for (final record in records) {
-            if (isCurrentDate(record.timestamp, dateToDisplay)) {
-              currentDateRecords.add(record);
-            }
-          }
           return LineChart(
             LineChartData(
               lineBarsData: [
