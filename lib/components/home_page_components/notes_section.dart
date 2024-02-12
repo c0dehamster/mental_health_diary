@@ -4,7 +4,6 @@ import 'package:mental_health_diary/components/home_page_components/note_input_f
 import 'package:mental_health_diary/components/note_tile.dart';
 import 'package:mental_health_diary/components/icon_button_naked.dart';
 import 'package:mental_health_diary/mock_data/mock_data_today.dart';
-import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 import '../../models/database/notes_database.dart';
 import '../../models/note.dart';
