@@ -7,11 +7,9 @@ import 'package:mental_health_diary/models/note.dart';
 class NoteInputForm extends StatefulWidget {
   const NoteInputForm({
     super.key,
-    required this.closeForm,
     this.noteToEdit,
   });
 
-  final void Function() closeForm;
   final Note? noteToEdit;
 
   @override
@@ -25,13 +23,13 @@ class _NoteInputFormState extends State<NoteInputForm> {
 
   late final Box notesBox;
 
-  var isAddEnabled = false;
+  var isEditing = false;
 
   void _toggleSubmitButton() {
     final text = _noteController.text;
 
     setState(() {
-      isAddEnabled = text.isNotEmpty;
+      isEditing = text.isNotEmpty;
     });
   }
 
@@ -47,7 +45,6 @@ class _NoteInputFormState extends State<NoteInputForm> {
     }
 
     _noteController.clear();
-    widget.closeForm();
   }
 
   @override
@@ -74,14 +71,38 @@ class _NoteInputFormState extends State<NoteInputForm> {
   Widget build(BuildContext context) {
     final buttonText = widget.noteToEdit != null ? "Confirm" : "Add";
 
-    final buttonColor = isAddEnabled
-        ? Theme.of(context).colorScheme.primary
-        : Theme.of(context).colorScheme.tertiary;
+    Widget controlButtons = isEditing
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                ),
+                onPressed: () {},
+                child: const Text("Cancel"),
+              ),
+              const SizedBox(width: 24),
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                ),
+                onPressed: () {
+                  if (isEditing) {
+                    _onSubmit();
+                  }
+                },
+                child: Text(buttonText),
+              ),
+            ],
+          )
+        : Container();
 
     return Form(
       key: _noteInputFormKey,
       child: Container(
         padding: const EdgeInsets.all(24),
+        margin: const EdgeInsets.only(bottom: 72),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
         ),
@@ -99,28 +120,11 @@ class _NoteInputFormState extends State<NoteInputForm> {
               ),
             ),
 
+            const SizedBox(height: 8),
+
             // Control buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: widget.closeForm,
-                  child: const Text("Cancel"),
-                ),
-                const SizedBox(width: 24),
-                TextButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStatePropertyAll(buttonColor),
-                  ),
-                  onPressed: () {
-                    if (isAddEnabled) {
-                      _onSubmit();
-                    }
-                  },
-                  child: Text(buttonText),
-                ),
-              ],
-            )
+
+            controlButtons,
           ],
         ),
       ),

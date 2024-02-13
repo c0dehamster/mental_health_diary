@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mental_health_diary/components/home_page_components/note_input_form.dart';
 import 'package:mental_health_diary/components/note_tile.dart';
-import 'package:mental_health_diary/components/icon_button_naked.dart';
 import 'package:mental_health_diary/mock_data/mock_data_today.dart';
 
 import '../../models/database/notes_database.dart';
@@ -25,30 +24,14 @@ class _NotesSectionState extends State<NotesSection> {
 
   final notesDatabase = NotesDatabase();
 
-  late Note? noteToEdit;
+  Note? noteToEdit;
 
   bool isFormShown = false;
-
-  void _toggleFormVisibility(bool value) {
-    setState(() {
-      isFormShown = value;
-    });
-  }
-
-  void _addNote() {
-    setState(() {
-      noteToEdit = null;
-    });
-
-    _toggleFormVisibility(true);
-  }
 
   void _setNoteToEdit(Note note) {
     setState(() {
       noteToEdit = note;
     });
-
-    _toggleFormVisibility(true);
   }
 
   @override
@@ -93,20 +76,10 @@ class _NotesSectionState extends State<NotesSection> {
 
     return Column(
       children: [
-        IconButtonNaked(
-          onPressed: _addNote,
-          label: "Add note",
-          icon: Icons.add,
-        ),
-
         // New note input, togglable
-        isFormShown
-            ? NoteInputForm(
-                closeForm: () => _toggleFormVisibility(false),
-                noteToEdit: noteToEdit,
-              )
-            : Container(),
-        const SizedBox(height: 48),
+        NoteInputForm(
+          noteToEdit: noteToEdit,
+        ),
 
         noteTiles,
       ],
