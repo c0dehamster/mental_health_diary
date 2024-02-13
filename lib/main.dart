@@ -20,7 +20,7 @@ void main() async {
 
   // Open the boxes
   await Hive.openBox("themeSettings");
-  await Hive.openBox("firstRecordDate");
+  await Hive.openBox<DateTime>("firstLaunchDate");
   await Hive.openBox<MoodRecord>("records");
   await Hive.openBox<Note>("notes");
 

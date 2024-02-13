@@ -17,6 +17,7 @@ dependencies:
   flutter_svg: ^2.0.9
   fl_chart: ^0.66.1
   flutter_slidable: ^3.0.1
+  flutter_heatmap_calendar: ^1.0.5 
 
   
 
