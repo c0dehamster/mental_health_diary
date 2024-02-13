@@ -37,13 +37,36 @@ class MoodDatabase {
   num? getAveragePerDate(DateTime dateToDisplay) {
     final currentDateRecords = getRecordsByDate(dateToDisplay);
 
-    // This is obviously wrong, just a way to check if the data is displayed
+    if (currentDateRecords.isEmpty) return null;
+    if (currentDateRecords.length == 1) return currentDateRecords[0].value;
 
-    final values = currentDateRecords.map((e) => e.value);
+    // Area under the graph divided by the timespan
+    // between the first and the last record gives the average
 
-    final average = values.isNotEmpty
-        ? values.reduce((value, element) => value + element) / values.length
-        : null;
+    final timeIntervalTotal = currentDateRecords.last.timestamp
+        .difference(currentDateRecords[0].timestamp)
+        .inMinutes;
+
+    num areaUnderGraph = 0;
+
+    for (var i = 1; i < currentDateRecords.length; i++) {
+      final timeInterval = currentDateRecords[i]
+          .timestamp
+          .difference(currentDateRecords[i - 1].timestamp)
+          .inMinutes;
+
+      final currentSectionArea =
+          (currentDateRecords[i - 1].value + currentDateRecords[i].value) /
+              2 *
+              timeInterval;
+
+      areaUnderGraph += currentSectionArea;
+    }
+
+    // An absolutely horrendous way to round to a given precision
+
+    final average =
+        double.parse((areaUnderGraph / timeIntervalTotal).toStringAsFixed(1));
 
     return average;
   }
