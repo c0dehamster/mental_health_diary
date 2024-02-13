@@ -5,7 +5,7 @@ import '../../utils/datetime_utils.dart';
 import '../note.dart';
 
 class NotesDatabase {
-  List<Note> notes = [];
+  List<Note> _notes = [];
 
   // Reference the box
   final _notesBox = Hive.box<Note>("notes");
@@ -13,7 +13,7 @@ class NotesDatabase {
   // Load the data from the database
 
   void loadData() {
-    notes = _notesBox.toMap().values.toList();
+    _notes = _notesBox.toMap().values.toList();
   }
 
   // Read notes given a particular date
@@ -23,7 +23,7 @@ class NotesDatabase {
 
     List<Note> currentDateNotes = [];
 
-    for (final note in notes) {
+    for (final note in _notes) {
       if (isCurrentDate(note.timestamp, dateToDisplay)) {
         currentDateNotes.add(note);
       }

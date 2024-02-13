@@ -21,7 +21,8 @@ class Calendar extends StatelessWidget {
       colorMode: ColorMode.color,
       defaultColor: Theme.of(context).colorScheme.onBackground,
       textColor: Theme.of(context).colorScheme.primary,
-      borderRadius: 4,
+      borderRadius: 2,
+      margin: const EdgeInsets.all(3),
       flexible: true,
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health_diary/components/app_drawer.dart';
+import 'package:mental_health_diary/components/calendar_page_components/calendar.dart';
+import 'package:mental_health_diary/models/database/first_launch_date.dart';
+import 'package:mental_health_diary/models/database/mood_database.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -9,8 +12,15 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final moodDatabase = MoodDatabase();
+  final firstLaunchDate = FirstLaunchDate();
+
+  final today = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
+    final initDate = firstLaunchDate.firstLaunchDate ?? today;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -21,22 +31,9 @@ class _CalendarPageState extends State<CalendarPage> {
         titleSpacing: 0,
 
         // Date navigator
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.chevron_left),
-            ),
-            const Text(
-              "January",
-              style: TextStyle(fontSize: 14),
-            ), // Replace later with the actual date
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.chevron_right),
-            ),
-          ],
+        title: const Text(
+          "Your monthly report",
+          style: TextStyle(fontSize: 14),
         ),
         actions: [
           Padding(
@@ -50,10 +47,12 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
       drawer: const AppDrawer(),
       body: ListView(
-        children: const [
-          Center(
-            child: Text("Calendar goes here"),
-          )
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        children: [
+          Calendar(
+            initDate: initDate,
+            datasets: moodDatabase.averageValuesAll,
+          ),
         ],
       ),
     );

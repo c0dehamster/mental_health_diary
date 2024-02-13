@@ -17,6 +17,7 @@ class FirstLaunchDate {
   // Get the first launch date
 
   DateTime? get firstLaunchDate {
+    if (_firstLaunchDateBox.isEmpty) return null;
     return _firstLaunchDateBox.getAt(0);
   }
 

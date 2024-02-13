@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:mental_health_diary/models/database/first_launch_date.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 import 'package:mental_health_diary/models/note.dart';
 import 'package:mental_health_diary/pages/calendar_page.dart';
@@ -23,6 +24,9 @@ void main() async {
   await Hive.openBox<DateTime>("firstLaunchDate");
   await Hive.openBox<MoodRecord>("records");
   await Hive.openBox<Note>("notes");
+
+  // Save the first launch date
+  FirstLaunchDate().saveFirstLaunchDate;
 
   runApp(
     ChangeNotifierProvider(
