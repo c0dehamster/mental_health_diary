@@ -24,6 +24,7 @@ class Calendar extends StatelessWidget {
       borderRadius: 2,
       margin: const EdgeInsets.all(3),
       flexible: true,
+      showColorTip: false,
     );
   }
 }
