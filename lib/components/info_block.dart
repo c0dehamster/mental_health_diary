@@ -20,8 +20,10 @@ class InfoBlock extends StatelessWidget {
     final averageMoodFormatted =
         averageMood != null ? "Average mood: $averageMood" : "No data";
 
-    List<Widget> notes = notesDatabase.notes.map((note) {
+    List<Widget> notes =
+        notesDatabase.getNotesByDate(dateToDisplay).map((note) {
       return Container(
+        margin: const EdgeInsets.only(bottom: 32),
         width: double.infinity,
         decoration:
             BoxDecoration(color: Theme.of(context).colorScheme.secondary),
