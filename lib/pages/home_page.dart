@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // The callback to set the mood picker to add new / overwrite an existing record
+
   void setInputMode() {
     setState(() {
       inputMode = InputMode.overwrite;

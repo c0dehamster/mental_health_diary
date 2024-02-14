@@ -29,8 +29,6 @@ class _MoodPickerState extends State<MoodPicker> {
 
   int? _moodValue;
 
-  var addButtonState = AddButtonState.add;
-
   // Create a new mood record entry
   // If less than 15 min has passed since the last record, it will be overwritten
 
@@ -46,7 +44,7 @@ class _MoodPickerState extends State<MoodPicker> {
       }
     } else {
       if (_moodValue != null && box.isNotEmpty) {
-        // Only try to create a new record if a value is chosen
+        // Only try to overwrite if the previous value exists
         moodDatabase.overwriteRecord(_moodValue!);
       }
     }
@@ -84,6 +82,10 @@ class _MoodPickerState extends State<MoodPicker> {
 
     final buttonLabel = widget.inputMode == InputMode.add ? "Add" : "Overwrite";
 
+    final buttonColor = _moodValue != null
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.tertiary;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -91,11 +93,16 @@ class _MoodPickerState extends State<MoodPicker> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text("How would you rate your mood?"),
-            // The button should be enabled only if a value is selected
+            // The button is displayed as enabled only if a value is selected
 
             TextButton(
               onPressed: _onSubmit,
-              child: Text(buttonLabel),
+              style: ButtonStyle(
+                foregroundColor: MaterialStatePropertyAll(buttonColor),
+              ),
+              child: Text(
+                buttonLabel,
+              ),
             ),
           ],
         ),
