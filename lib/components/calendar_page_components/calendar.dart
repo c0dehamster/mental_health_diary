@@ -7,10 +7,12 @@ class Calendar extends StatelessWidget {
     super.key,
     required this.initDate,
     required this.datasets,
+    required this.onDateSelect,
   });
 
   final DateTime initDate;
   final Map<DateTime, int> datasets;
+  final void Function(DateTime) onDateSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class Calendar extends StatelessWidget {
       margin: const EdgeInsets.all(3),
       flexible: true,
       showColorTip: false,
+      onClick: onDateSelect,
     );
   }
 }
