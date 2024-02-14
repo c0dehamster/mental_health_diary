@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
             Text(
               dateFormatted,
               style: const TextStyle(fontSize: 14),
-            ), // Replace later with the actual date
+            ),
 
             // The forward button is only displayed if the date currently viewed is before the current date
 

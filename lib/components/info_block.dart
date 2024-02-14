@@ -17,8 +17,9 @@ class InfoBlock extends StatelessWidget {
     final moodDatabase = MoodDatabase();
     final notesDatabase = NotesDatabase();
     final averageMood = moodDatabase.getAveragePerDate(dateToDisplay);
-    final averageMoodFormatted =
-        averageMood != null ? "Average mood: $averageMood" : "No data";
+    final averageMoodFormatted = averageMood != null
+        ? "Average mood: ${averageMood.toStringAsFixed(1)}"
+        : "No data";
 
     List<Widget> notes =
         notesDatabase.getNotesByDate(dateToDisplay).map((note) {

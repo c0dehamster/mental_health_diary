@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mental_health_diary/mock_data/mock_data_today.dart';
 
-import '../../utils/datetime_utils.dart';
 import '../note.dart';
 
 class NotesDatabase {
@@ -24,7 +24,7 @@ class NotesDatabase {
     List<Note> currentDateNotes = [];
 
     for (final note in _notes) {
-      if (isCurrentDate(note.timestamp, dateToDisplay)) {
+      if (DateUtils.isSameDay(note.timestamp, dateToDisplay)) {
         currentDateNotes.add(note);
       }
     }

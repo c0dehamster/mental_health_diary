@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 
-import '../../utils/datetime_utils.dart';
-
 class MoodDatabase {
   List<MoodRecord> _records = [];
 
@@ -24,8 +22,10 @@ class MoodDatabase {
 
     List<MoodRecord> currentDateRecords = [];
 
+    // Timestamps are stored as UTC, therefore dateToDisplay is converted to UTC too
+
     for (final record in _records) {
-      if (isCurrentDate(record.timestamp, dateToDisplay)) {
+      if (DateUtils.isSameDay(record.timestamp, dateToDisplay)) {
         currentDateRecords.add(record);
       }
     }
@@ -64,32 +64,7 @@ class MoodDatabase {
       areaUnderGraph += currentSectionArea;
     }
 
-    // An absolutely horrendous way to round to a given precision
-
-    final average =
-        double.parse((areaUnderGraph / timeIntervalTotal).toStringAsFixed(1));
-
-    return average;
-  }
-
-  // Get all average mood values per month
-
-  Map<DateTime, int> getAverageValuesPerMonth(int year, int month) {
-    final monthLength = DateUtils.getDaysInMonth(year, month);
-
-    Map<DateTime, int> valuesPerMonth = {};
-
-    for (var i = 1; i <= monthLength; i++) {
-      final date = DateTime(year, month, i);
-
-      final value = getAveragePerDate(date);
-
-      // Since the heatmap displays 0 as an empty square,
-      // the values are shifted by 1
-      valuesPerMonth[date] = value != null ? (value + 1).round() : 0;
-    }
-
-    return valuesPerMonth;
+    return areaUnderGraph / timeIntervalTotal;
   }
 
   // Get ALL the average mood values
@@ -103,14 +78,17 @@ class MoodDatabase {
 
     // The heatmap requires the dataset to start from the 1st day of the monts
 
-    final satasetStartDate =
+    final datasetStartDate =
         DateTime(firstRecordDate.year, firstRecordDate.month, 1);
 
-    final datasetLength = DateTime.now().difference(satasetStartDate).inDays;
+    final datasetLength = DateTime.now().difference(datasetStartDate).inDays;
 
     for (var i = 0; i < datasetLength; i++) {
-      final date = satasetStartDate.add(Duration(days: i));
+      final date = datasetStartDate.add(Duration(days: i));
       final value = getAveragePerDate(date);
+
+      // Since the heatmap displays 0 as an empty square,
+      // the values are shifted by 1
 
       averageMoodValues[date] = value != null ? (value + 1).round() : 0;
     }

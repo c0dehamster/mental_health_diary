@@ -34,7 +34,7 @@ class MoodChart extends StatelessWidget {
                 LineChartBarData(
                   spots: currentDateRecords
                       .map((moodRecord) => FlSpot(
-                            getTimeAsHours(moodRecord.timestamp),
+                            getTimeAsHours(moodRecord.timestamp.toLocal()),
                             moodRecord.value.toDouble(),
                           ))
                       .toList(),
