@@ -24,7 +24,7 @@ class NotesDatabase {
     List<Note> currentDateNotes = [];
 
     for (final note in _notes) {
-      if (DateUtils.isSameDay(note.timestamp, dateToDisplay)) {
+      if (DateUtils.isSameDay(note.timestamp.toLocal(), dateToDisplay)) {
         currentDateNotes.add(note);
       }
     }

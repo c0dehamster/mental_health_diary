@@ -25,7 +25,7 @@ class MoodDatabase {
     // Timestamps are stored as UTC, therefore dateToDisplay is converted to UTC too
 
     for (final record in _records) {
-      if (DateUtils.isSameDay(record.timestamp, dateToDisplay)) {
+      if (DateUtils.isSameDay(record.timestamp.toLocal(), dateToDisplay)) {
         currentDateRecords.add(record);
       }
     }
@@ -83,7 +83,7 @@ class MoodDatabase {
 
     final datasetLength = DateTime.now().difference(datasetStartDate).inDays;
 
-    for (var i = 0; i < datasetLength; i++) {
+    for (var i = 0; i <= datasetLength; i++) {
       final date = datasetStartDate.add(Duration(days: i));
       final value = getAveragePerDate(date);
 
@@ -91,6 +91,9 @@ class MoodDatabase {
       // the values are shifted by 1
 
       averageMoodValues[date] = value != null ? (value + 1).round() : 0;
+
+/*       print("$date: $value");
+ */
     }
 
     return averageMoodValues;
