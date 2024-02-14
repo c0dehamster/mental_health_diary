@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
 
             // The forward button is only displayed if the date currently viewed is before the current date
 
-            !isCurrentDate(displayedDate, today)
+            !DateUtils.isSameDay(displayedDate, today)
                 ? IconButton(
                     onPressed: incrementDate,
                     icon: const Icon(Icons.chevron_right),
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
       drawer: const AppDrawer(),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: isCurrentDate(displayedDate, today)
+        children: DateUtils.isSameDay(displayedDate, today)
             ? [
                 MoodChart(
                   dateToDisplay: today,
