@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mental_health_diary/components/info_block.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
@@ -6,6 +8,8 @@ import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 import '../components/app_drawer.dart';
 import '../components/home_page_components/mood_picker.dart';
+
+enum InputMode { add, overwrite }
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +23,8 @@ class _HomePageState extends State<HomePage> {
 
   final today = DateTime.now();
 
+  var inputMode = InputMode.add;
+
   // Date nav callbacks
 
   void incrementDate() {
@@ -30,6 +36,18 @@ class _HomePageState extends State<HomePage> {
   void decrementDate() {
     setState(() {
       displayedDate = displayedDate.subtract(const Duration(days: 1));
+    });
+  }
+
+  void setInputMode() {
+    setState(() {
+      inputMode = InputMode.overwrite;
+    });
+
+    Timer(const Duration(minutes: 1), () {
+      setState(() {
+        inputMode = InputMode.add;
+      });
     });
   }
 
@@ -96,7 +114,10 @@ class _HomePageState extends State<HomePage> {
                   dateToDisplay: today,
                 ),
                 const SizedBox(height: 72),
-                const MoodPicker(),
+                MoodPicker(
+                  inputMode: inputMode,
+                  onAdd: setInputMode,
+                ),
                 const SizedBox(height: 72),
                 NotesSection(dateToDisplay: today),
               ]
