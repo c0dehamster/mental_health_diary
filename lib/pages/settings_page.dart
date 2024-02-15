@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/app_drawer.dart';
+import 'package:mental_health_diary/components/toggle_theme_button.dart';
 
 import '../models/mood_record.dart';
 import '../models/note.dart';
@@ -41,10 +42,7 @@ class SettingsPage extends StatelessWidget {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.sunny),
-              ),
+              child: ToggleThemeButton(context: context),
             ),
           ],
         ),

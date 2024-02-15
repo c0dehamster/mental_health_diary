@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mental_health_diary/components/app_drawer.dart';
 import 'package:mental_health_diary/components/calendar_page_components/calendar.dart';
 import 'package:mental_health_diary/components/info_block.dart';
+import 'package:mental_health_diary/components/toggle_theme_button.dart';
 import 'package:mental_health_diary/models/database/first_launch_date.dart';
 import 'package:mental_health_diary/models/database/mood_database.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
@@ -96,12 +97,8 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.sunny),
-              ),
-            ),
+                padding: const EdgeInsets.only(right: 16),
+                child: ToggleThemeButton(context: context)),
           ],
         ),
         drawer: const AppDrawer(),

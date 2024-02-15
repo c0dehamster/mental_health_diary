@@ -30,12 +30,6 @@ class _NotesSectionState extends State<NotesSection> {
 
   bool isFormShown = false;
 
-  void _setNoteToEdit(Note note) {
-    setState(() {
-      noteToEdit = note;
-    });
-  }
-
   @override
   void initState() {
     super.initState();

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mental_health_diary/components/info_block.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
 import 'package:mental_health_diary/components/home_page_components/notes_section.dart';
-import 'package:mental_health_diary/theme/theme_provider.dart';
+import 'package:mental_health_diary/components/toggle_theme_button.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
-import 'package:provider/provider.dart';
 
 import '../components/app_drawer.dart';
 import '../components/home_page_components/mood_picker.dart';
@@ -26,10 +25,6 @@ class _HomePageState extends State<HomePage> {
   final today = DateTime.now();
 
   var inputMode = InputMode.add;
-
-  void toggleTheme() {
-    Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-  }
 
   void incrementDate() {
     setState(() {
@@ -104,10 +99,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: IconButton(
-                onPressed: toggleTheme,
-                icon: const Icon(Icons.sunny),
-              ),
+              child: ToggleThemeButton(context: context),
             ),
           ],
         ),
