@@ -43,7 +43,12 @@ class InfoBlock extends StatelessWidget {
       children: [
         MoodChart(dateToDisplay: dateToDisplay),
         const SizedBox(height: 72),
-        Text(averageMoodFormatted),
+        Text(
+          averageMoodFormatted,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
         const SizedBox(height: 48),
         Column(
           children: notes,

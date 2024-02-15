@@ -112,34 +112,44 @@ class _MoodPickerState extends State<MoodPicker> {
           ],
         ),
 
-        const SizedBox(height: 32),
+        const SizedBox(height: 16),
+
+        Container(
+          padding: const EdgeInsets.only(top: 16),
+          color: Theme.of(context).colorScheme.secondary,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: emojis,
+              ),
+
+              // Mood select checkbox group
+              Row(
+                children: List<Widget>.generate(moodSpectre.length, (index) {
+                  return Expanded(
+                    child: Transform.scale(
+                      scale: 0.75,
+                      child: Radio<int>(
+                          toggleable: true,
+                          fillColor:
+                              MaterialStateProperty.all(moodSpectre[index]),
+                          value: index,
+                          groupValue: _moodValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _moodValue = value;
+                            });
+                          }),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+        )
 
         // Emoji labels
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: emojis,
-        ),
-
-        // Mood select checkbox group
-        Row(
-          children: List<Widget>.generate(moodSpectre.length, (index) {
-            return Expanded(
-              child: Transform.scale(
-                scale: 0.75,
-                child: Radio<int>(
-                    toggleable: true,
-                    fillColor: MaterialStateProperty.all(moodSpectre[index]),
-                    value: index,
-                    groupValue: _moodValue,
-                    onChanged: (value) {
-                      setState(() {
-                        _moodValue = value;
-                      });
-                    }),
-              ),
-            );
-          }),
-        ),
       ],
     );
   }
