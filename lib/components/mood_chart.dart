@@ -19,6 +19,22 @@ class MoodChart extends StatelessWidget {
     final moodDatabase = MoodDatabase();
     final recordsBox = Hive.box<MoodRecord>("records");
 
+    Widget getTitles(double value, TitleMeta meta) {
+      final style = TextStyle(
+        color: Theme.of(context).colorScheme.primary,
+      );
+
+      final titleValue =
+          value == 0 || value == 24 ? "" : value.toStringAsFixed(0);
+
+      final Widget title = Text(titleValue, style: style);
+
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        child: title,
+      );
+    }
+
     return AspectRatio(
       aspectRatio: 1.3,
       child: ValueListenableBuilder(
@@ -62,14 +78,14 @@ class MoodChart extends StatelessWidget {
 
               // The show prop defaults to false; by creating a SideTitle without arguments,
               // we make it not show up
-              titlesData: const FlTitlesData(
-                topTitles: AxisTitles(
+              titlesData: FlTitlesData(
+                topTitles: const AxisTitles(
                   sideTitles: SideTitles(),
                 ),
-                leftTitles: AxisTitles(
+                leftTitles: const AxisTitles(
                   sideTitles: SideTitles(),
                 ),
-                rightTitles: AxisTitles(
+                rightTitles: const AxisTitles(
                   sideTitles: SideTitles(),
                 ),
                 bottomTitles: AxisTitles(
@@ -77,6 +93,7 @@ class MoodChart extends StatelessWidget {
                     showTitles: true,
                     interval: 3,
                     reservedSize: 32,
+                    getTitlesWidget: getTitles,
                   ),
                 ),
               ),
