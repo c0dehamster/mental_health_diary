@@ -92,7 +92,12 @@ class _MoodPickerState extends State<MoodPicker> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("How would you rate your mood?"),
+            Text(
+              "How would you rate your mood?",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
             // The button is displayed as enabled only if a value is selected
 
             TextButton(

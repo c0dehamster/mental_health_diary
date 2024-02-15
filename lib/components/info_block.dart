@@ -31,7 +31,10 @@ class InfoBlock extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Text(
           note.contents,
-          style: const TextStyle(height: 2),
+          style: TextStyle(
+            height: 2,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       );
     }).toList();

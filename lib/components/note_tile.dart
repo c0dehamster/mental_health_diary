@@ -25,6 +25,7 @@ class NoteTile extends StatelessWidget {
             SlidableAction(
               onPressed: editTile,
               backgroundColor: Theme.of(context).colorScheme.tertiary,
+              foregroundColor: Theme.of(context).colorScheme.secondary,
               icon: Icons.settings,
             ),
 
@@ -32,6 +33,7 @@ class NoteTile extends StatelessWidget {
             SlidableAction(
               onPressed: deleteTile,
               backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).colorScheme.tertiary,
               icon: Icons.delete,
             )
           ],
@@ -43,7 +45,10 @@ class NoteTile extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Text(
             contents,
-            style: const TextStyle(height: 2),
+            style: TextStyle(
+              height: 2,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ),
       ),

@@ -111,8 +111,11 @@ class _NoteInputFormState extends State<NoteInputForm> {
                   MaxLengthEnforcement.truncateAfterCompositionEnds,
               maxLines: null,
               scrollPadding: const EdgeInsets.all(96),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Add a note",
+                hintStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
               ),
             ),
 

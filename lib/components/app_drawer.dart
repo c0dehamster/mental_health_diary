@@ -11,10 +11,17 @@ class AppDrawer extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: ListView(
           children: [
-            const DrawerHeader(
-              child: Text("Simple mood tracker"),
+            DrawerHeader(
+              child: Text(
+                "Simple mood tracker",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
             ),
             ListTile(
+              textColor: Theme.of(context).colorScheme.primary,
+              iconColor: Theme.of(context).colorScheme.primary,
               leading: const Icon(Icons.home_outlined),
               title: const Text("Home"),
               onTap: () {
@@ -22,6 +29,8 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
+              textColor: Theme.of(context).colorScheme.primary,
+              iconColor: Theme.of(context).colorScheme.primary,
               leading: const Icon(Icons.calendar_month_outlined),
               title: const Text("Monthly report"),
               onTap: () {
@@ -29,6 +38,8 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
+              textColor: Theme.of(context).colorScheme.primary,
+              iconColor: Theme.of(context).colorScheme.primary,
               leading: const Icon(Icons.settings_outlined),
               title: const Text("Settings"),
               onTap: () {
