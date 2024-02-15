@@ -78,41 +78,44 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        toolbarHeight: 72,
-        leadingWidth: 64,
-        centerTitle: true,
-        titleSpacing: 0,
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          toolbarHeight: 72,
+          leadingWidth: 64,
+          centerTitle: true,
+          titleSpacing: 0,
 
-        // Date navigator
-        title: const Text(
-          "Your monthly report",
-          style: TextStyle(fontSize: 14),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.sunny),
+          // Date navigator
+          title: const Text(
+            "Your monthly report",
+            style: TextStyle(fontSize: 14),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.sunny),
+              ),
             ),
-          ),
-        ],
-      ),
-      drawer: const AppDrawer(),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: [
-          Calendar(
-            initDate: initDate,
-            datasets: moodDatabase.averageValuesAll,
-            onDateSelect: setDisplayedDate,
-          ),
-          isDateInfoShown ? infoSection : Container(),
-        ],
+          ],
+        ),
+        drawer: const AppDrawer(),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          children: [
+            Calendar(
+              initDate: initDate,
+              datasets: moodDatabase.averageValuesAll,
+              onDateSelect: setDisplayedDate,
+            ),
+            isDateInfoShown ? infoSection : Container(),
+          ],
+        ),
       ),
     );
   }

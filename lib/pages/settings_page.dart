@@ -23,53 +23,56 @@ class SettingsPage extends StatelessWidget {
       notesBox.clear();
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        toolbarHeight: 72,
-        leadingWidth: 64,
-        centerTitle: true,
-        titleSpacing: 0,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          toolbarHeight: 72,
+          leadingWidth: 64,
+          centerTitle: true,
+          titleSpacing: 0,
 
-        // Date navigator
-        title: const Text(
-          "Settings",
-          style: TextStyle(fontSize: 14),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.sunny),
+          // Date navigator
+          title: const Text(
+            "Settings",
+            style: TextStyle(fontSize: 14),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.sunny),
+              ),
             ),
-          ),
-        ],
-      ),
-      drawer: const AppDrawer(),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextButton(
-                onPressed: clearRecords,
-                child: const Text(
-                  "Clear records",
-                  style: TextStyle(fontSize: 16),
+          ],
+        ),
+        drawer: const AppDrawer(),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed: clearRecords,
+                  child: const Text(
+                    "Clear records",
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
-              ),
-              TextButton(
-                onPressed: clearNotes,
-                child: const Text(
-                  "Clear notes",
-                  style: TextStyle(fontSize: 16),
+                TextButton(
+                  onPressed: clearNotes,
+                  child: const Text(
+                    "Clear notes",
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

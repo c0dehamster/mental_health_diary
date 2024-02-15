@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:mental_health_diary/mock_data/mock_data_today.dart';
 
 import '../note.dart';
 
@@ -29,17 +28,17 @@ class NotesDatabase {
       }
     }
 
-    // If no notes is in the list, placeholder data is returned (temporary)
-
-    return currentDateNotes.isNotEmpty ? currentDateNotes : mockDataNotes;
+    return currentDateNotes;
   }
 
   // Update the database
 
   void addNote(String contents) {
-    final newIndex = _notesBox.length;
+    loadData();
+    final newIndex = _notes.isEmpty ? 0 : _notes.last.index + 1;
 
-    _notesBox.add(
+    _notesBox.put(
+      newIndex,
       Note(
         contents: contents,
         timestamp: DateTime.timestamp(),

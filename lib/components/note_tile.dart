@@ -10,8 +10,8 @@ class NoteTile extends StatelessWidget {
   });
 
   final String contents;
-  final void Function(BuildContext?) editTile;
-  final void Function(BuildContext?) deleteTile;
+  final void Function(BuildContext) editTile;
+  final void Function(BuildContext) deleteTile;
 
   @override
   Widget build(BuildContext context) {

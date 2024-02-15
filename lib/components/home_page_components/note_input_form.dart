@@ -34,14 +34,14 @@ class _NoteInputFormState extends State<NoteInputForm> {
   }
 
   void _onSubmit() {
-    if (widget.noteToEdit == null) {
-      notesDatabase.addNote(_noteController.text);
-    } else {
+    if (widget.noteToEdit != null) {
       // _editNote can be called only if the noteToEdit is provided
       notesDatabase.editNote(
         widget.noteToEdit!.index,
         _noteController.text,
       );
+    } else {
+      notesDatabase.addNote(_noteController.text);
     }
 
     _noteController.clear();
@@ -87,11 +87,7 @@ class _NoteInputFormState extends State<NoteInputForm> {
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                 ),
-                onPressed: () {
-                  if (isEditing) {
-                    _onSubmit();
-                  }
-                },
+                onPressed: _onSubmit,
                 child: Text(buttonText),
               ),
             ],
