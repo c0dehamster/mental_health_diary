@@ -19,6 +19,8 @@ class MoodChart extends StatelessWidget {
     final moodDatabase = MoodDatabase();
     final recordsBox = Hive.box<MoodRecord>("records");
 
+    // The titles don't take the primary color unless set to it explicitly
+
     Widget getTitles(double value, TitleMeta meta) {
       final style = TextStyle(
         color: Theme.of(context).colorScheme.primary,

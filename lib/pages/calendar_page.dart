@@ -83,6 +83,7 @@ class _CalendarPageState extends State<CalendarPage> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
+          surfaceTintColor: Colors.transparent,
           backgroundColor: Theme.of(context).colorScheme.background,
           foregroundColor: Theme.of(context).colorScheme.primary,
           toolbarHeight: 72,
