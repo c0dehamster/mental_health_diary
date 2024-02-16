@@ -4,7 +4,11 @@ import 'package:hive/hive.dart';
 import 'package:mental_health_diary/models/database/mood_database.dart';
 import 'package:mental_health_diary/models/mood_record.dart';
 import 'package:mental_health_diary/pages/home_page.dart';
-import 'package:mental_health_diary/theme/mood_spectre.dart';
+import 'package:mental_health_diary/utils/emoji_assets.dart';
+import 'package:mental_health_diary/utils/mood_spectre.dart';
+import 'package:provider/provider.dart';
+
+import '../../theme/theme_provider.dart';
 
 enum AddButtonState { add, overwrite }
 
@@ -64,15 +68,16 @@ class _MoodPickerState extends State<MoodPicker> {
 
   @override
   Widget build(BuildContext context) {
+    // The mood picker colors depending on the theme
+
+    final moodSpectre = getMoodSpectre(context);
+
     // The emoji row
 
-    const List<String> emojiAssets = [
-      "lib/images/emoji_colored_pain.svg",
-      "lib/images/emoji_colored_sad.svg",
-      "lib/images/emoji_colored_neutral.svg",
-      "lib/images/emoji_colored_okay.svg",
-      "lib/images/emoji_colored_happy.svg",
-    ];
+    final emojiAssets =
+        Provider.of<ThemeProvider>(context, listen: false).isDarkMode
+            ? emojiAssetsOnDark
+            : emojiAssetsOnLight;
 
     final List<Widget> emojis = emojiAssets
         .map((emoji) => SvgPicture.asset(emoji, width: 24, height: 24))

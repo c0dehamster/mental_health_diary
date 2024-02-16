@@ -37,9 +37,6 @@ class NotesDatabase {
     loadData();
     final newIndex = _notes.isEmpty ? 0 : _notes.last.index + 1;
 
-    print("New index: $newIndex");
-    print("List length: ${_notes.length}");
-
     _notesBox.put(
       newIndex,
       Note(
