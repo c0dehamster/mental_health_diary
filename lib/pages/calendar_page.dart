@@ -66,8 +66,12 @@ class _CalendarPageState extends State<CalendarPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(pageTitle),
+              Text(
+                pageTitle,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
               IconButton(
+                color: Theme.of(context).colorScheme.primary,
                 onPressed: hideDisplayedDate,
                 icon: const Icon(Icons.close_sharp),
               ),
