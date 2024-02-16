@@ -37,6 +37,9 @@ class NotesDatabase {
     loadData();
     final newIndex = _notes.isEmpty ? 0 : _notes.last.index + 1;
 
+    print("New index: $newIndex");
+    print("List length: ${_notes.length}");
+
     _notesBox.put(
       newIndex,
       Note(
@@ -48,7 +51,7 @@ class NotesDatabase {
   }
 
   void editNote(int index, String newContents) {
-    _notesBox.deleteAt(index);
+    _notesBox.delete(index);
 
     _notesBox.put(
       index,
@@ -61,6 +64,6 @@ class NotesDatabase {
   }
 
   void deleteNote(int index) {
-    _notesBox.deleteAt(index);
+    _notesBox.delete(index);
   }
 }

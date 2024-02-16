@@ -49,7 +49,7 @@ class _NotesSectionState extends State<NotesSection> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           contentTextStyle: TextStyle(
             color: Theme.of(context).colorScheme.primary,
           ),
