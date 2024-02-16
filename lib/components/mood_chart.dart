@@ -64,7 +64,7 @@ class MoodChart extends StatelessWidget {
               // Displayed ranges of values (constant)
               minX: 0,
               maxX: 24,
-              minY: 1,
+              minY: 0,
               maxY: 9,
 
               // Grid styling
