@@ -47,6 +47,10 @@ class _NoteInputFormState extends State<NoteInputForm> {
     _noteController.clear();
   }
 
+  void onCancel() {
+    _noteController.clear();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -79,7 +83,7 @@ class _NoteInputFormState extends State<NoteInputForm> {
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                 ),
-                onPressed: () {},
+                onPressed: onCancel,
                 child: const Text("Cancel"),
               ),
               const SizedBox(width: 24),
