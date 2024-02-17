@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/components/app_drawer.dart';
+import 'package:mental_health_diary/components/settings_components/confirm_box.dart';
 import 'package:mental_health_diary/components/toggle_theme_button.dart';
 
 import '../models/mood_record.dart';
@@ -55,14 +56,32 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
-                  onPressed: clearRecords,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ConfirmBox(
+                        alertMessage:
+                            "Are you sure you want to erase all the records?",
+                        onConfirm: clearRecords,
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Clear records",
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
                 TextButton(
-                  onPressed: clearNotes,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ConfirmBox(
+                        alertMessage:
+                            "Are you sure you want to erase all the notes?",
+                        onConfirm: clearNotes,
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Clear notes",
                     style: TextStyle(fontSize: 16),
