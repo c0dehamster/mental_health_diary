@@ -117,6 +117,9 @@ class _NoteInputFormState extends State<NoteInputForm> {
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
 
             const SizedBox(height: 8),
