@@ -5,6 +5,7 @@ import 'package:mental_health_diary/components/info_block.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
 import 'package:mental_health_diary/components/home_page_components/notes_section.dart';
 import 'package:mental_health_diary/components/toggle_theme_button.dart';
+import 'package:mental_health_diary/utils/breakpoints.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 import '../components/app_drawer.dart';
@@ -62,6 +63,75 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final dateFormatted = "${months[displayedDate.month]} ${displayedDate.day}";
 
+    final homePageSiingleColumn = ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      children: DateUtils.isSameDay(displayedDate, today)
+          ? [
+              MoodChart(
+                dateToDisplay: today,
+              ),
+              const SizedBox(height: 72),
+              MoodPicker(
+                inputMode: inputMode,
+                onAdd: setInputMode,
+              ),
+              const SizedBox(height: 72),
+              NotesSection(dateToDisplay: today),
+            ]
+          : [InfoBlock(dateToDisplay: displayedDate)],
+    );
+
+    final homePageTwoColumns = ListView(children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 64,
+          vertical: 48,
+        ),
+        child: Column(
+          children: DateUtils.isSameDay(displayedDate, today)
+              ? [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: BorderDirectional(
+                        bottom: BorderSide(
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ),
+                    padding: const EdgeInsets.only(bottom: 48),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: MoodPicker(
+                            inputMode: inputMode,
+                            onAdd: setInputMode,
+                          ),
+                        ),
+                        const SizedBox(width: 64),
+                        Expanded(
+                          child: Center(child: MoodChart(dateToDisplay: today)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 64),
+                  Container(
+                      constraints:
+                          const BoxConstraints(minWidth: double.infinity),
+                      child: NotesSection(dateToDisplay: today)),
+                ]
+              : [InfoBlock(dateToDisplay: displayedDate)],
+        ),
+      )
+    ]);
+
+    final pageWrapperDesktop = Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: homePageSiingleColumn,
+      ),
+    );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -105,22 +175,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         drawer: const AppDrawer(),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          children: DateUtils.isSameDay(displayedDate, today)
-              ? [
-                  MoodChart(
-                    dateToDisplay: today,
-                  ),
-                  const SizedBox(height: 72),
-                  MoodPicker(
-                    inputMode: inputMode,
-                    onAdd: setInputMode,
-                  ),
-                  const SizedBox(height: 72),
-                  NotesSection(dateToDisplay: today),
-                ]
-              : [InfoBlock(dateToDisplay: displayedDate)],
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < Breakpoints.medium) {
+              return homePageSiingleColumn;
+            } else if (constraints.maxWidth < Breakpoints.large) {
+              return pageWrapperDesktop;
+            } else {
+              return homePageTwoColumns;
+            }
+          },
         ),
       ),
     );

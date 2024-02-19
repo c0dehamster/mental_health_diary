@@ -94,33 +94,37 @@ class _MoodPickerState extends State<MoodPicker> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "How would you rate your mood?",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+        Container(
+          constraints: const BoxConstraints(maxWidth: 400),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "How would you rate your mood?",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
-            ),
-            // The button is displayed as enabled only if a value is selected
+              // The button is displayed as enabled only if a value is selected
 
-            TextButton(
-              onPressed: _onSubmit,
-              style: ButtonStyle(
-                foregroundColor: MaterialStatePropertyAll(buttonColor),
+              TextButton(
+                onPressed: _onSubmit,
+                style: ButtonStyle(
+                  foregroundColor: MaterialStatePropertyAll(buttonColor),
+                ),
+                child: Text(
+                  buttonLabel,
+                ),
               ),
-              child: Text(
-                buttonLabel,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
 
         const SizedBox(height: 16),
 
         Container(
           padding: const EdgeInsets.only(top: 16),
+          constraints: const BoxConstraints(maxWidth: 400),
           color: Theme.of(context).colorScheme.secondary,
           child: Column(
             children: [
@@ -131,6 +135,7 @@ class _MoodPickerState extends State<MoodPicker> {
 
               // Mood select checkbox group
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: List<Widget>.generate(moodSpectre.length, (index) {
                   return Expanded(
                     child: Transform.scale(

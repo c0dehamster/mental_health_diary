@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:mental_health_diary/models/database/notes_database.dart';
 import 'package:mental_health_diary/models/note.dart';
+import 'package:mental_health_diary/utils/breakpoints.dart';
 
 class NoteInputForm extends StatefulWidget {
   const NoteInputForm({
@@ -98,41 +99,58 @@ class _NoteInputFormState extends State<NoteInputForm> {
           )
         : Container();
 
+    final formContents = Column(
+      children: [
+        TextFormField(
+          controller: _noteController,
+          maxLength: 300,
+          maxLengthEnforcement:
+              MaxLengthEnforcement.truncateAfterCompositionEnds,
+          maxLines: null,
+          scrollPadding: const EdgeInsets.all(96),
+          decoration: InputDecoration(
+            hintText: "Add a note",
+            hintStyle: TextStyle(
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+          ),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+
+        const SizedBox(height: 8),
+
+        // Control buttons
+
+        controlButtons,
+      ],
+    );
+
     return Form(
       key: _noteInputFormKey,
-      child: Container(
-        padding: const EdgeInsets.all(24),
-        margin: const EdgeInsets.only(bottom: 72),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _noteController,
-              maxLength: 300,
-              maxLengthEnforcement:
-                  MaxLengthEnforcement.truncateAfterCompositionEnds,
-              maxLines: null,
-              scrollPadding: const EdgeInsets.all(96),
-              decoration: InputDecoration(
-                hintText: "Add a note",
-                hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.tertiary,
-                ),
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth < Breakpoints.large) {
+            return Container(
+              padding: const EdgeInsets.all(24),
+              margin: const EdgeInsets.only(bottom: 72),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
               ),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+              child: formContents,
+            );
+          } else {
+            return Container(
+              padding: const EdgeInsets.all(32),
+              width: 300,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
               ),
-            ),
-
-            const SizedBox(height: 8),
-
-            // Control buttons
-
-            controlButtons,
-          ],
-        ),
+              child: formContents,
+            );
+          }
+        },
       ),
     );
   }

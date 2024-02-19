@@ -37,80 +37,83 @@ class MoodChart extends StatelessWidget {
       );
     }
 
-    return AspectRatio(
-      aspectRatio: 1.3,
-      child: ValueListenableBuilder(
-        valueListenable: recordsBox.listenable(),
-        builder: (context, value, child) {
-          // List of records to display
-          List<MoodRecord> currentDateRecords =
-              moodDatabase.getRecordsByDate(dateToDisplay);
+    return Container(
+      constraints: const BoxConstraints(maxHeight: 480),
+      child: AspectRatio(
+        aspectRatio: 1.3,
+        child: ValueListenableBuilder(
+          valueListenable: recordsBox.listenable(),
+          builder: (context, value, child) {
+            // List of records to display
+            List<MoodRecord> currentDateRecords =
+                moodDatabase.getRecordsByDate(dateToDisplay);
 
-          return LineChart(
-            LineChartData(
-              lineBarsData: [
-                LineChartBarData(
-                  spots: currentDateRecords
-                      .map((moodRecord) => FlSpot(
-                            getTimeAsHours(moodRecord.timestamp.toLocal()),
-                            moodRecord.value.toDouble(),
-                          ))
-                      .toList(),
-                  isCurved: false,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ],
+            return LineChart(
+              LineChartData(
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: currentDateRecords
+                        .map((moodRecord) => FlSpot(
+                              getTimeAsHours(moodRecord.timestamp.toLocal()),
+                              moodRecord.value.toDouble(),
+                            ))
+                        .toList(),
+                    isCurved: false,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ],
 
-              // Displayed ranges of values (constant)
-              minX: 0,
-              maxX: 24,
-              minY: 0,
-              maxY: 9,
+                // Displayed ranges of values (constant)
+                minX: 0,
+                maxX: 24,
+                minY: 0,
+                maxY: 9,
 
-              // Grid styling
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              gridData: FlGridData(
-                drawVerticalLine: false,
-                getDrawingHorizontalLine: (value) {
-                  return FlLine(
-                      color: Theme.of(context).colorScheme.background);
-                },
-                horizontalInterval: 1,
-              ),
+                // Grid styling
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                gridData: FlGridData(
+                  drawVerticalLine: false,
+                  getDrawingHorizontalLine: (value) {
+                    return FlLine(
+                        color: Theme.of(context).colorScheme.background);
+                  },
+                  horizontalInterval: 1,
+                ),
 
-              // The show prop defaults to false; by creating a SideTitle without arguments,
-              // we make it not show up
-              titlesData: FlTitlesData(
-                topTitles: const AxisTitles(
-                  sideTitles: SideTitles(),
+                // The show prop defaults to false; by creating a SideTitle without arguments,
+                // we make it not show up
+                titlesData: FlTitlesData(
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(),
+                  ),
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: 3,
+                      reservedSize: 32,
+                      getTitlesWidget: getTitles,
+                    ),
+                  ),
                 ),
-                leftTitles: const AxisTitles(
-                  sideTitles: SideTitles(),
-                ),
-                rightTitles: const AxisTitles(
-                  sideTitles: SideTitles(),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    interval: 3,
-                    reservedSize: 32,
-                    getTitlesWidget: getTitles,
+
+                // Styled X-axis aka border-bottom
+                borderData: FlBorderData(
+                  show: true,
+                  border: Border(
+                    bottom: BorderSide(
+                        color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
               ),
-
-              // Styled X-axis aka border-bottom
-              borderData: FlBorderData(
-                show: true,
-                border: Border(
-                  bottom:
-                      BorderSide(color: Theme.of(context).colorScheme.primary),
-                ),
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

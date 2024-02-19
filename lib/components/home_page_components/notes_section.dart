@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:mental_health_diary/components/home_page_components/note_input_form.dart';
 import 'package:mental_health_diary/components/note_tile.dart';
 import 'package:mental_health_diary/mock_data/mock_data_today.dart';
+import 'package:mental_health_diary/utils/breakpoints.dart';
 
 import '../../models/database/notes_database.dart';
 import '../../models/note.dart';
@@ -99,14 +100,12 @@ class _NotesSectionState extends State<NotesSection> {
       );
     }
 
-    final noteTiles = ValueListenableBuilder(
+    return ValueListenableBuilder(
       valueListenable: notesBox.listenable(),
       builder: (context, value, child) {
         // Notes to display according to the date
 
         final currentDateNotes = notesDatabase.getNotesByDate(today);
-
-        if (currentDateNotes.isEmpty) return Container();
 
         List<Widget> noteTiles = currentDateNotes
             .map((note) {
@@ -120,21 +119,36 @@ class _NotesSectionState extends State<NotesSection> {
             .reversed
             .toList();
 
-        return Column(
-          children: noteTiles,
+        return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            if (constraints.maxWidth < Breakpoints.large) {
+              return Column(
+                children: [
+                  // New note input, togglable
+                  NoteInputForm(
+                    noteToEdit: noteToEdit,
+                  ),
+
+                  Column(
+                    children: noteTiles,
+                  ),
+                ],
+              );
+            } else {
+              return Wrap(
+                spacing: 40,
+                runSpacing: 40,
+                children: [
+                  NoteInputForm(
+                    noteToEdit: noteToEdit,
+                  ),
+                  ...noteTiles,
+                ],
+              );
+            }
+          },
         );
       },
-    );
-
-    return Column(
-      children: [
-        // New note input, togglable
-        NoteInputForm(
-          noteToEdit: noteToEdit,
-        ),
-
-        noteTiles,
-      ],
     );
   }
 }
