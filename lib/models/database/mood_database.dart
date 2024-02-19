@@ -74,7 +74,8 @@ class MoodDatabase {
 
     loadData();
 
-    final firstRecordDate = _records[0].timestamp;
+    final firstRecordDate =
+        _records.isNotEmpty ? _records[0].timestamp : DateTime.now();
 
     // The heatmap requires the dataset to start from the 1st day of the monts
 
