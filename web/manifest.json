@@ -1,6 +1,6 @@
 {
-    "name": "mental_health_diary",
-    "short_name": "mental_health_diary",
+    "name": "Minimal mood tracker",
+    "short_name": "Minimal mood tracker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
