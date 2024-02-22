@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health_diary/components/mood_chart.dart';
+import 'package:mental_health_diary/utils/breakpoints.dart';
 
 import '../models/database/mood_database.dart';
 import '../models/database/notes_database.dart';
@@ -39,21 +40,58 @@ class InfoBlock extends StatelessWidget {
       );
     }).toList();
 
-    return Column(
+    final layoutMobile = Container(
+      constraints: const BoxConstraints(maxWidth: 480),
+      child: Column(
+        children: [
+          MoodChart(dateToDisplay: dateToDisplay),
+          const SizedBox(height: 72),
+          Text(
+            averageMoodFormatted,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 48),
+          Column(
+            children: notes,
+          ),
+        ],
+      ),
+    );
+
+    final layoutDesktop = Row(
       children: [
-        MoodChart(dateToDisplay: dateToDisplay),
-        const SizedBox(height: 72),
-        Text(
-          averageMoodFormatted,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                averageMoodFormatted,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 72),
+              ...notes
+            ],
           ),
         ),
-        const SizedBox(height: 48),
-        Column(
-          children: notes,
+        const SizedBox(width: 64),
+        Expanded(
+          child: MoodChart(dateToDisplay: dateToDisplay),
         ),
       ],
+    );
+
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth < Breakpoints.large) {
+          return layoutMobile;
+        } else {
+          return layoutDesktop;
+        }
+      },
     );
   }
 }

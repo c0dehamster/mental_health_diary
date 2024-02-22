@@ -16,18 +16,24 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HeatMapCalendar(
-      datasets: datasets,
-      colorsets: getMoodSpectreAsMap(context),
-      initDate: initDate,
-      colorMode: ColorMode.color,
-      defaultColor: Theme.of(context).colorScheme.tertiary,
-      textColor: Theme.of(context).colorScheme.secondary,
-      borderRadius: 2,
-      margin: const EdgeInsets.all(3),
-      flexible: true,
-      showColorTip: false,
-      onClick: onDateSelect,
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: HeatMapCalendar(
+          datasets: datasets,
+          colorsets: getMoodSpectreAsMap(context),
+          initDate: initDate,
+          colorMode: ColorMode.color,
+          defaultColor: Theme.of(context).colorScheme.tertiary,
+          textColor: Theme.of(context).colorScheme.secondary,
+          borderRadius: 2,
+          margin: const EdgeInsets.all(3),
+          flexible: true,
+          showColorTip: false,
+          onClick: onDateSelect,
+        ),
+      ),
     );
   }
 }

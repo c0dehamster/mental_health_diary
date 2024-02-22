@@ -5,6 +5,7 @@ import 'package:mental_health_diary/components/info_block.dart';
 import 'package:mental_health_diary/components/toggle_theme_button.dart';
 import 'package:mental_health_diary/models/database/first_launch_date.dart';
 import 'package:mental_health_diary/models/database/mood_database.dart';
+import 'package:mental_health_diary/utils/breakpoints.dart';
 import 'package:mental_health_diary/utils/datetime_utils.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -83,6 +84,47 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
     );
 
+    final pageContents = [
+      Calendar(
+        initDate: initDate,
+        datasets: moodDatabase.averageValuesAll,
+        onDateSelect: setDisplayedDate,
+      ),
+      isDateInfoShown ? infoSection : Container(),
+    ];
+
+    final layoutMobile = ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      children: pageContents,
+    );
+
+    final layoutTablet = ListView(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 64,
+        vertical: 48,
+      ),
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: pageContents,
+            ),
+          ),
+        ),
+      ],
+    );
+
+    final layoutDesktop = ListView(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 64,
+        vertical: 48,
+      ),
+      children: pageContents,
+    );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -107,16 +149,16 @@ class _CalendarPageState extends State<CalendarPage> {
           ],
         ),
         drawer: const AppDrawer(),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          children: [
-            Calendar(
-              initDate: initDate,
-              datasets: moodDatabase.averageValuesAll,
-              onDateSelect: setDisplayedDate,
-            ),
-            isDateInfoShown ? infoSection : Container(),
-          ],
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < Breakpoints.medium) {
+              return layoutMobile;
+            } else if (constraints.maxWidth < Breakpoints.large) {
+              return layoutTablet;
+            } else {
+              return layoutDesktop;
+            }
+          },
         ),
       ),
     );

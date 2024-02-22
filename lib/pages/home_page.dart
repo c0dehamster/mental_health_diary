@@ -63,73 +63,89 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final dateFormatted = "${months[displayedDate.month]} ${displayedDate.day}";
 
-    final homePageSiingleColumn = ListView(
+    final pageContents = DateUtils.isSameDay(displayedDate, today)
+        ? [
+            MoodChart(
+              dateToDisplay: today,
+            ),
+            const SizedBox(height: 72),
+            MoodPicker(
+              inputMode: inputMode,
+              onAdd: setInputMode,
+            ),
+            const SizedBox(height: 72),
+            NotesSection(dateToDisplay: today),
+          ]
+        : [InfoBlock(dateToDisplay: displayedDate)];
+
+    final layoutMobile = ListView(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-      children: DateUtils.isSameDay(displayedDate, today)
-          ? [
-              MoodChart(
-                dateToDisplay: today,
-              ),
-              const SizedBox(height: 72),
-              MoodPicker(
-                inputMode: inputMode,
-                onAdd: setInputMode,
-              ),
-              const SizedBox(height: 72),
-              NotesSection(dateToDisplay: today),
-            ]
-          : [InfoBlock(dateToDisplay: displayedDate)],
+      children: pageContents,
     );
 
-    final homePageTwoColumns = ListView(children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 64,
-          vertical: 48,
+    final layoutTablet = ListView(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 64,
+        vertical: 48,
+      ),
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: pageContents,
+            ),
+          ),
         ),
-        child: Column(
-          children: DateUtils.isSameDay(displayedDate, today)
-              ? [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: BorderDirectional(
-                        bottom: BorderSide(
-                            color: Theme.of(context).colorScheme.primary),
+      ],
+    );
+
+    final layoutDesktop = ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 64,
+            vertical: 48,
+          ),
+          child: Column(
+            children: DateUtils.isSameDay(displayedDate, today)
+                ? [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: BorderDirectional(
+                          bottom: BorderSide(
+                              color: Theme.of(context).colorScheme.primary),
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(bottom: 48),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: MoodPicker(
+                              inputMode: inputMode,
+                              onAdd: setInputMode,
+                            ),
+                          ),
+                          const SizedBox(width: 64),
+                          Expanded(
+                            child:
+                                Center(child: MoodChart(dateToDisplay: today)),
+                          ),
+                        ],
                       ),
                     ),
-                    padding: const EdgeInsets.only(bottom: 48),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: MoodPicker(
-                            inputMode: inputMode,
-                            onAdd: setInputMode,
-                          ),
-                        ),
-                        const SizedBox(width: 64),
-                        Expanded(
-                          child: Center(child: MoodChart(dateToDisplay: today)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 64),
-                  Container(
-                      constraints:
-                          const BoxConstraints(minWidth: double.infinity),
-                      child: NotesSection(dateToDisplay: today)),
-                ]
-              : [InfoBlock(dateToDisplay: displayedDate)],
-        ),
-      )
-    ]);
-
-    final pageWrapperDesktop = Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: homePageSiingleColumn,
-      ),
+                    const SizedBox(height: 64),
+                    Container(
+                        constraints:
+                            const BoxConstraints(minWidth: double.infinity),
+                        child: NotesSection(dateToDisplay: today)),
+                  ]
+                : [InfoBlock(dateToDisplay: displayedDate)],
+          ),
+        )
+      ],
     );
 
     return SafeArea(
@@ -178,11 +194,11 @@ class _HomePageState extends State<HomePage> {
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth < Breakpoints.medium) {
-              return homePageSiingleColumn;
+              return layoutMobile;
             } else if (constraints.maxWidth < Breakpoints.large) {
-              return pageWrapperDesktop;
+              return layoutTablet;
             } else {
-              return homePageTwoColumns;
+              return layoutDesktop;
             }
           },
         ),
