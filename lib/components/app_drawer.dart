@@ -13,7 +13,7 @@ class AppDrawer extends StatelessWidget {
           children: [
             DrawerHeader(
               child: Text(
-                "Simple mood tracker",
+                "Minimal mood tracker",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                 ),
